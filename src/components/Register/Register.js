@@ -1,5 +1,4 @@
 import React from "react";
-//import "./Signin.css";
 
 class Register extends React.Component {
   constructor(props) {
@@ -24,7 +23,7 @@ class Register extends React.Component {
   };
 
   onSubmitSignIn = () => {
-    fetch("http://localhost:3001/register", {
+    fetch("https://shrouded-scrubland-70526.herokuapp.com/register", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -35,14 +34,16 @@ class Register extends React.Component {
     })
       .then((response) => response.json())
       .then((user) => {
-        this.props.loadUser(user);
-        if (user) this.props.onRouteChange("home");
+        if (user) {
+          this.props.loadUser(user);
+          this.props.onRouteChange("home");
+        }
       });
   };
 
   render() {
     return (
-      <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+      <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
           <div className="measure">
             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">

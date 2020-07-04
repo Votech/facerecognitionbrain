@@ -1,5 +1,4 @@
 import React from "react";
-//import "./Signin.css";
 
 class Signin extends React.Component {
   constructor(props) {
@@ -19,7 +18,7 @@ class Signin extends React.Component {
   };
 
   onSubmitSignIn = () => {
-    fetch("http://localhost:3001/signin", {
+    fetch("https://shrouded-scrubland-70526.herokuapp.com/signin", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -29,15 +28,17 @@ class Signin extends React.Component {
     })
       .then((response) => response.json())
       .then((user) => {
-        if (user.id) this.props.loadUser(user);
-        this.props.onRouteChange("home");
+        if (user.id) {
+          this.props.loadUser(user);
+          this.props.onRouteChange("home");
+        }
       });
   };
 
   render() {
     const { onRouteChange } = this.props;
     return (
-      <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+      <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
           <div className="measure">
             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -78,7 +79,7 @@ class Signin extends React.Component {
             <div className="lh-copy mt3">
               <p
                 onClick={() => onRouteChange("register")}
-                className="f4 link dim black db"
+                className="f6 link dim black db pointer"
               >
                 Register
               </p>

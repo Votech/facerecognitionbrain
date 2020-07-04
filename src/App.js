@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import Particles from "react-particles-js";
 import Clarifai from "clarifai";
+import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import Navigation from "./components/Navigation/Navigation";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
-import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import Logo from "./components/Logo/Logo";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
 import "./App.css";
 
+//You must add your own API key here from Clarifai.
 const app = new Clarifai.App({
   apiKey: "6fd92aecf244427ba7f45d742ec997bf",
 });
@@ -20,7 +21,7 @@ const particlesOptions = {
       value: 30,
       density: {
         enable: true,
-        value_area: 200,
+        value_area: 800,
       },
     },
   },
@@ -78,6 +79,7 @@ class App extends Component {
   onInputChange = (event) => {
     this.setState({ input: event.target.value });
   };
+
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
     app.models
@@ -89,7 +91,7 @@ class App extends Component {
       )
       .then((response) => {
         if (response) {
-          fetch("http://localhost:3001/image", {
+          fetch("https://shrouded-scrubland-70526.herokuapp.com/image", {
             method: "put",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -124,17 +126,16 @@ class App extends Component {
           isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
         />
-        {this.state.route === "home" ? (
+        {route === "home" ? (
           <div>
-            {" "}
             <Logo />
             <Rank
               name={this.state.user.name}
               entries={this.state.user.entries}
             />
             <ImageLinkForm
-              onButtonSubmit={this.onButtonSubmit}
               onInputChange={this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit}
             />
             <FaceRecognition box={box} imageUrl={imageUrl} />
           </div>
